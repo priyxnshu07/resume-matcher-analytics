@@ -314,7 +314,7 @@ with st.sidebar:
     if has_results:
         st.markdown("---")
         st.markdown("### 🔄 Operations")
-        if st.button("Start New Analysis", key="reset_btn", type="secondary", use_container_width=True):
+        if st.button("Start New Analysis", key="reset_btn", type="secondary", width="stretch"):
             st.session_state.clear()
             st.rerun()
 
@@ -383,7 +383,7 @@ with input_container:
         threshold = st.slider("Minimum match threshold (%)", 0, 100, int(st.session_state.get('threshold', 0)), 5, key="threshold_slider")
 
     st.markdown("---")
-    analyze_btn = st.button("🔍 Run Resume‑Job Matching & Ranking", type="primary", use_container_width=True, key="analyze_btn")
+    analyze_btn = st.button("🔍 Run Resume‑Job Matching & Ranking", type="primary", width="stretch", key="analyze_btn")
 
 # Check if we should run analysis
 if analyze_btn:
@@ -540,7 +540,7 @@ if 'results' in st.session_state:
                     if result['top_terms']:
                         terms_df = pd.DataFrame(result['top_terms'], columns=['Term', 'TF-IDF Score'])
                         terms_df['TF-IDF Score'] = terms_df['TF-IDF Score'].round(4)
-                        st.dataframe(terms_df, use_container_width=True, hide_index=True)
+                        st.dataframe(terms_df, width="stretch", hide_index=True)
 
         # Download results as CSV
         st.markdown("---")
@@ -560,7 +560,7 @@ if 'results' in st.session_state:
             csv,
             "resume_rankings.csv",
             "text/csv",
-            use_container_width=True,
+            width="stretch",
             key="download_csv"
         )
 
@@ -656,7 +656,7 @@ if 'results' in st.session_state:
             st.markdown("**Top 10 TF-IDF terms for this resume:**")
             terms_df = pd.DataFrame(selected_result['top_terms'], columns=['Term', 'TF-IDF Score'])
             terms_df['TF-IDF Score'] = terms_df['TF-IDF Score'].round(6)
-            st.dataframe(terms_df, use_container_width=True, hide_index=True)
+            st.dataframe(terms_df, width="stretch", hide_index=True)
 
         # Step 5: Cosine Similarity
         st.markdown("#### Step 5: Cosine Similarity Calculation")
@@ -695,7 +695,7 @@ Common terms contributing to match: {len(d['common_terms'])}
                         reverse=True
                     )[:15]
                 ]
-                st.dataframe(pd.DataFrame(contrib_data), use_container_width=True, hide_index=True)
+                st.dataframe(pd.DataFrame(contrib_data), width="stretch", hide_index=True)
 
     # ============================================================
     # TAB 4: VISUALIZATIONS
@@ -724,7 +724,7 @@ Common terms contributing to match: {len(d['common_terms'])}
             height=450,
             margin=dict(b=120),
         )
-        st.plotly_chart(fig_bar, use_container_width=True, key="bar_chart")
+        st.plotly_chart(fig_bar, width="stretch", key="bar_chart")
 
         # Skill match comparison
         st.markdown("#### Skill Match Rate Comparison")
@@ -752,7 +752,7 @@ Common terms contributing to match: {len(d['common_terms'])}
             margin=dict(b=120),
             legend=dict(orientation='h', y=1.1),
         )
-        st.plotly_chart(fig_skill, use_container_width=True, key="skill_chart")
+        st.plotly_chart(fig_skill, width="stretch", key="skill_chart")
 
         # Cosine Similarity vs Skill Match scatter
         st.markdown("#### Cosine Similarity vs Skill Match Rate")
@@ -780,7 +780,7 @@ Common terms contributing to match: {len(d['common_terms'])}
             font=dict(color='#c9d1d9'),
             height=400,
         )
-        st.plotly_chart(fig_scatter, use_container_width=True, key="scatter_chart")
+        st.plotly_chart(fig_scatter, width="stretch", key="scatter_chart")
 
 else:
     # ---- Educational Info ----

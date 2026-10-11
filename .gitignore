@@ -34,3 +34,4 @@ Thumbs.db
 # Research and Scratchpad
 research_notes.md
 .venv/
+data/eval/

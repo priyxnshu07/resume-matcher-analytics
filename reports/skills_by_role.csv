@@ -1,0 +1,122 @@
+category,skill,resumes,pct_of_resumes
+Advocate,less,10,40
+Advocate,llm,10,20
+Advocate,adaptability,10,10
+Arts,communication,6,33
+Arts,presentation,6,17
+Arts,negotiation,6,17
+Arts,mentoring,6,17
+Arts,adaptability,6,17
+Automation Testing,selenium,7,86
+Automation Testing,java,7,43
+Automation Testing,c++,7,43
+Automation Testing,api,7,43
+Automation Testing,integration testing,7,43
+Blockchain,api,5,60
+Blockchain,mysql,5,60
+Blockchain,java,5,60
+Blockchain,postgresql,5,40
+Blockchain,nodejs,5,40
+Business Analyst,excel,6,67
+Business Analyst,sql,6,33
+Business Analyst,html,6,33
+Business Analyst,communication,6,33
+Business Analyst,monitoring,6,33
+Civil Engineer,monitoring,6,33
+Civil Engineer,excel,6,17
+Civil Engineer,communication,6,17
+Data Science,python,10,100
+Data Science,machine learning,10,90
+Data Science,less,10,70
+Data Science,deep learning,10,50
+Data Science,sql,10,50
+Database,oracle,11,82
+Database,sql,11,82
+Database,linux,11,73
+Database,monitoring,11,73
+Database,sql server,11,55
+DevOps Engineer,sql,7,71
+DevOps Engineer,aws,7,57
+DevOps Engineer,python,7,57
+DevOps Engineer,html,7,57
+DevOps Engineer,java,7,57
+DotNet Developer,c#,7,86
+DotNet Developer,sql server,7,86
+DotNet Developer,sql,7,86
+DotNet Developer,html,7,71
+DotNet Developer,javascript,7,71
+ETL Developer,etl,5,100
+ETL Developer,sql,5,100
+ETL Developer,unix,5,80
+ETL Developer,unit testing,5,60
+ETL Developer,jira,5,40
+Electrical Engineering,communication,5,40
+Electrical Engineering,problem solving,5,40
+Electrical Engineering,monitoring,5,40
+Electrical Engineering,transformer,5,40
+Electrical Engineering,api,5,20
+HR,less,10,30
+HR,communication,10,30
+HR,database management,10,20
+HR,excel,10,10
+HR,leadership,10,10
+Hadoop,scala,7,100
+Hadoop,oracle,7,71
+Hadoop,sql,7,71
+Hadoop,java,7,71
+Hadoop,shell,7,57
+Health and fitness,communication,6,33
+Health and fitness,excel,6,17
+Health and fitness,coaching,6,17
+Health and fitness,leadership,6,17
+Health and fitness,public speaking,6,17
+Java Developer,java,13,100
+Java Developer,spring,13,62
+Java Developer,javascript,13,46
+Java Developer,sql,13,46
+Java Developer,oracle,13,46
+Mechanical Engineer,monitoring,5,20
+Mechanical Engineer,less,5,20
+Mechanical Engineer,negotiation,5,20
+Mechanical Engineer,excel,5,20
+Mechanical Engineer,r,5,20
+Network Security Engineer,monitoring,5,60
+Network Security Engineer,less,5,40
+Network Security Engineer,problem solving,5,40
+Network Security Engineer,analytical,5,40
+Network Security Engineer,communication,5,40
+Operations Manager,monitoring,4,100
+Operations Manager,r,4,50
+Operations Manager,project management,4,50
+Operations Manager,communication,4,50
+Operations Manager,mentoring,4,25
+PMO,project management,3,100
+PMO,communication,3,67
+PMO,excel,3,67
+PMO,forecasting,3,33
+PMO,cross-functional,3,33
+Python Developer,python,6,100
+Python Developer,mysql,6,83
+Python Developer,numpy,6,67
+Python Developer,django,6,67
+Python Developer,rest,6,50
+SAP Developer,sql,6,50
+SAP Developer,unit testing,6,33
+SAP Developer,analytical,6,33
+SAP Developer,oracle,6,17
+SAP Developer,etl,6,17
+Sales,communication,5,60
+Sales,presentation,5,40
+Sales,less,5,20
+Sales,analytical,5,20
+Sales,excel,5,20
+Testing,java,7,29
+Testing,excel,7,29
+Testing,transformer,7,29
+Testing,analytical,7,14
+Testing,linux,7,14
+Web Designing,javascript,4,75
+Web Designing,bootstrap,4,75
+Web Designing,jquery,4,75
+Web Designing,php,4,50
+Web Designing,java,4,50
