@@ -3,8 +3,13 @@
 [![CI](https://github.com/priyxnshu07/resume-matcher-analytics/actions/workflows/ci.yml/badge.svg)](https://github.com/priyxnshu07/resume-matcher-analytics/actions/workflows/ci.yml)
 ![Python](https://img.shields.io/badge/python-3.10-3776AB)
 ![From scratch](https://img.shields.io/badge/TF--IDF%20%2B%20cosine-from%20scratch-667eea)
+[![Live demo](https://img.shields.io/badge/demo-live-00d2ff)](https://resume-matcher-analytics-priyanshu.streamlit.app/)
 
 Rank resumes against a job description using **TF-IDF** and **cosine similarity**, with every core NLP algorithm written from scratch in Python. The project also **measures how well the matcher works** on 166 real resumes.
+
+**[▶ Live demo](https://resume-matcher-analytics-priyanshu.streamlit.app/)** (open **Model Evaluation** in the sidebar for the results)
+
+> Free hosting sleeps when idle; if you see "wake up", click it and wait about 30 seconds.
 
 ---
 
