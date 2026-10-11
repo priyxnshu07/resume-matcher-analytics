@@ -13,6 +13,8 @@ This is the "brain" that connects all from-scratch modules together.
 
 import json
 import os
+import re
+from functools import lru_cache
 
 from ..preprocessing.tokenizer import tokenize
 from ..preprocessing.stopwords import remove_stopwords
@@ -68,6 +70,25 @@ def load_skills_database():
         }
 
 
+# Skills that are also everyday words only count when written the way the
+# language is written ("R", "Go"), so "go to market" or "R&D" don't match.
+_CASE_SENSITIVE = {'r': 'R', 'go': 'Go'}
+
+
+@lru_cache(maxsize=None)
+def _skill_pattern(skill):
+    """Regex that matches a skill as a whole word, never inside another word.
+
+    Plain substring matching found "java" in "javascript", "go" in "google"
+    and "r" in almost every resume. Lookarounds are used instead of \\b so
+    skills with symbols ("c++", "c#", ".net", "node.js") still match.
+    """
+    skill_lower = skill.lower()
+    if skill_lower in _CASE_SENSITIVE:
+        return re.compile(r'(?<![A-Za-z0-9])' + re.escape(_CASE_SENSITIVE[skill_lower]) + r'(?![A-Za-z0-9+#&])')
+    return re.compile(r'(?<![a-z0-9])' + re.escape(skill_lower) + r'(?![a-z0-9+#])', re.IGNORECASE)
+
+
 def extract_skills(text, skills_db=None):
     """
     Extract skills found in text by matching against the skills database.
@@ -88,18 +109,10 @@ def extract_skills(text, skills_db=None):
     if skills_db is None:
         skills_db = load_skills_database()
 
-    text_lower = text.lower()
     found_skills = {}
 
     for category, skills_list in skills_db.items():
-        category_found = []
-        for skill in skills_list:
-            # Check if skill appears in text (as a whole word or common form)
-            skill_lower = skill.lower()
-            # Use word boundary-ish matching: check the skill is surrounded
-            # by non-alphanumeric characters or is at start/end
-            if skill_lower in text_lower:
-                category_found.append(skill)
+        category_found = [skill for skill in skills_list if _skill_pattern(skill).search(text)]
         if category_found:
             found_skills[category] = category_found
 

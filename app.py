@@ -648,7 +648,7 @@ if 'results' in st.session_state:
         st.markdown("""
         **Formulas used:**
         - `TF(t, d) = count(t in d) / total_terms(d)`
-        - `IDF(t) = log(N / (1 + df(t)))`
+        - `IDF(t) = log((1 + N) / (1 + df(t))) + 1`
         - `TF-IDF(t, d) = TF(t, d) × IDF(t)`
         """)
 

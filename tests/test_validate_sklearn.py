@@ -156,3 +156,33 @@ class TestValidateAgainstSklearn:
 if __name__ == '__main__':
     import pytest
     pytest.main([__file__, '-v', '-s'])
+
+
+def test_scores_match_sklearn_exactly():
+    """Our TF-IDF + cosine gives the same numbers as scikit-learn's default
+    TfidfVectorizer (smoothed IDF, L2 norm) when both use our tokens.
+
+    Cosine ignores vector length, so our TF (count / doc length) and sklearn's
+    raw counts give identical similarities.
+    """
+    from sklearn.feature_extraction.text import TfidfVectorizer
+    from sklearn.metrics.pairwise import cosine_similarity as sk_cosine
+
+    jd = "python machine learning tensorflow data science deep learning"
+    resumes = [
+        "python tensorflow machine learning deep learning keras pandas",
+        "javascript react nodejs html css typescript",
+        "python data analysis sql statistics excel",
+    ]
+    docs = [preprocess(t) for t in [jd] + resumes]
+
+    idf = compute_idf(docs)
+    jd_vec = compute_tfidf(docs[0], idf)
+    ours = [cosine_similarity(jd_vec, compute_tfidf(d, idf)) for d in docs[1:]]
+
+    vec = TfidfVectorizer(analyzer=lambda tokens: tokens)
+    matrix = vec.fit_transform(docs)
+    theirs = sk_cosine(matrix[0:1], matrix[1:])[0]
+
+    for a, b in zip(ours, theirs):
+        assert abs(a - b) < 1e-9, (ours, list(theirs))

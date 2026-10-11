@@ -8,14 +8,14 @@ The key insight: Words that appear in many documents are less useful
 for distinguishing between them. IDF penalizes common words and
 rewards rare, distinctive ones.
 
-Formula:
-    IDF(t) = log(N / (1 + df(t)))
+Formula (smoothed, the same as scikit-learn's default):
+    IDF(t) = log((1 + N) / (1 + df(t))) + 1
 
     Where:
-        N    = Total number of documents in the corpus
+        N     = Total number of documents in the corpus
         df(t) = Number of documents that contain term t
-        +1   = Smoothing factor to prevent division by zero
-        log  = Natural logarithm (compresses the scale)
+        +1s   = Smoothing: no division by zero, and IDF is always > 0
+        log   = Natural logarithm (compresses the scale)
 
 Example (3 documents):
     Doc1: "python machine learning"
@@ -24,11 +24,11 @@ Example (3 documents):
 
     N = 3 documents
 
-    "python"   appears in Doc1, Doc2     → df=2 → IDF = log(3/3) = 0.0
-    "machine"  appears in Doc1, Doc3     → df=2 → IDF = log(3/3) = 0.0
-    "java"     appears in Doc3 only      → df=1 → IDF = log(3/2) = 0.405
-    "data"     appears in Doc2 only      → df=1 → IDF = log(3/2) = 0.405
-    "science"  appears in Doc2 only      → df=1 → IDF = log(3/2) = 0.405
+    "python"   appears in Doc1, Doc2     → df=2 → IDF = log(4/3) + 1 = 1.288
+    "machine"  appears in Doc1, Doc3     → df=2 → IDF = log(4/3) + 1 = 1.288
+    "java"     appears in Doc3 only      → df=1 → IDF = log(4/2) + 1 = 1.693
+    "data"     appears in Doc2 only      → df=1 → IDF = log(4/2) + 1 = 1.693
+    "science"  appears in Doc2 only      → df=1 → IDF = log(4/2) + 1 = 1.693
 
     → "java", "data", "science" are MORE important (rare = distinctive!)
     → "python", "machine" are LESS important (common across docs)
@@ -43,7 +43,7 @@ def compute_idf(documents):
     """
     Calculate Inverse Document Frequency for every word across all documents.
 
-    Formula: IDF(t) = log(N / (1 + df(t)))
+    Formula (smoothed): IDF(t) = log((1 + N) / (1 + df(t))) + 1
 
     Words that appear in fewer documents get higher IDF scores,
     meaning they are more useful for distinguishing documents.
@@ -59,10 +59,15 @@ def compute_idf(documents):
     Example:
         >>> docs = [['python', 'ml'], ['java', 'ml'], ['python', 'web']]
         >>> idf = compute_idf(docs)
-        >>> idf['ml']     # appears in 2/3 docs → lower IDF
-        0.0
-        >>> idf['java']   # appears in 1/3 docs → higher IDF
-        0.405
+        >>> round(idf['ml'], 3)     # appears in 2/3 docs → lower IDF
+        1.288
+        >>> round(idf['java'], 3)   # appears in 1/3 docs → higher IDF
+        1.693
+
+    Why smoothed: the plain log(N / (1 + df)) is 0 or negative for common
+    words. With a JD and one resume (N = 2), every word unique to one document
+    gets IDF 0, so only shared words count and any overlap scores 100%.
+    The smoothed form is always > 0 and is the same formula scikit-learn uses.
     """
     if not documents:
         return {}
@@ -80,10 +85,10 @@ def compute_idf(documents):
     # Step 2: Calculate IDF for each word
     idf = {}
     for word, df in doc_freq.items():
-        # Formula: IDF(t) = log(N / (1 + df(t)))
-        # The +1 prevents division by zero
-        # log() is natural logarithm
-        idf[word] = math.log(N / (1 + df))
+        # Formula: IDF(t) = log((1 + N) / (1 + df(t))) + 1
+        # Adding 1 to N and df acts as if one extra document contained every
+        # word (no division by zero); the final +1 keeps every IDF positive.
+        idf[word] = math.log((1 + N) / (1 + df)) + 1
 
     return idf
 

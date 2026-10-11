@@ -54,11 +54,12 @@ class TestInverseDocumentFrequency:
         ]
         idf = compute_idf(docs)
 
-        # 'ml' appears in 2/3 docs → IDF = log(3/3) = 0
-        assert abs(idf['ml'] - math.log(3/3)) < 1e-10
+        # IDF = log((1 + N) / (1 + df)) + 1
+        # 'ml' appears in 2/3 docs → log(4/3) + 1
+        assert abs(idf['ml'] - (math.log(4/3) + 1)) < 1e-10
 
-        # 'java' appears in 1/3 docs → IDF = log(3/2)
-        assert abs(idf['java'] - math.log(3/2)) < 1e-10
+        # 'java' appears in 1/3 docs → log(4/2) + 1
+        assert abs(idf['java'] - (math.log(4/2) + 1)) < 1e-10
 
     def test_rare_word_higher_idf(self):
         docs = [
@@ -76,9 +77,9 @@ class TestInverseDocumentFrequency:
     def test_word_in_all_docs_low_idf(self):
         docs = [['common'], ['common'], ['common']]
         idf = compute_idf(docs)
-        # IDF = log(3/4) which is negative due to +1 smoothing
-        # This is expected behavior with the +1 smoothing
-        assert idf['common'] < 0.1
+        # log(4/4) + 1 = 1: the lowest possible IDF, but never zero or negative,
+        # so a word shared by every document still counts a little
+        assert idf['common'] == 1.0
 
     def test_empty_corpus(self):
         assert compute_idf([]) == {}
@@ -104,11 +105,11 @@ class TestTFIDF:
         idf = compute_idf(docs)
         tfidf = compute_tfidf(['python', 'ml'], idf)
 
-        # 'python' has TF=0.5 and IDF=log(2/2)=0
-        assert abs(tfidf['python'] - 0.5 * math.log(2/2)) < 1e-10
+        # 'python' has TF=0.5 and IDF=log(3/2)+1
+        assert abs(tfidf['python'] - 0.5 * (math.log(3/2) + 1)) < 1e-10
 
-        # 'ml' has TF=0.5 and IDF=log(2/3) (negative because of +1)
-        assert 'ml' in tfidf
+        # 'ml' is in both docs: lower weight than 'python', but still positive
+        assert 0 < tfidf['ml'] < tfidf['python']
 
     def test_build_matrix(self):
         docs = [['python', 'ml'], ['java', 'ml'], ['python', 'web']]

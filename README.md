@@ -25,7 +25,7 @@ The NLP and ML algorithms below use **only** `math`, `re`, and `collections` —
 | Algorithm | Formula | Module |
 |---|---|---|
 | Term Frequency | `TF(t,d) = count(t in d) / total_terms(d)` | `src/vectorization/tf.py` |
-| Inverse Document Frequency | `IDF(t) = log(N / (1 + df(t)))` | `src/vectorization/idf.py` |
+| Inverse Document Frequency | `IDF(t) = log((1 + N) / (1 + df(t))) + 1` | `src/vectorization/idf.py` |
 | TF‑IDF | `TF‑IDF(t,d) = TF × IDF` | `src/vectorization/tfidf.py` |
 | Cosine Similarity | `cos(A,B) = (A·B) / (‖A‖ × ‖B‖)` | `src/similarity/cosine.py` |
 | Porter Stemmer | 25 suffix‑stripping rules | `src/preprocessing/stemmer.py` |
